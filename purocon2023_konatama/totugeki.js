@@ -20,8 +20,12 @@ function mainloop() {
   drawImg(0, 0, 0);
   setAlp(50);
   fRect(450,800,1000,150,"black");
+  if(scene == 0) {
 
-
+  }
+  else if(scene == 1) {
+    
+  }
 
 
 
