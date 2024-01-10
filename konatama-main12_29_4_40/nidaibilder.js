@@ -19,6 +19,9 @@ var timehyouji = 1;
 var time = 0;
 var ikkai = 0;
 var sikaku_hojo = 0;
+var sougou_hp = 0;
+var sougou_hp_teki = 0;
+var kekka = 3;
 //※提出までに間に合わないかも
 
 
@@ -208,7 +211,6 @@ function mainloop() {
         taisen_G();     //対戦画面の表示
         taisen_hense(); //攻撃,移動処理
         nidai_hp();     //荷台HPの処理
-        result();       //結果の処理
         ksk_btn();      //倍速ボタン
         buck_btn(3);    //戻るボタン
         timer_modki();  //時間制限
@@ -216,6 +218,10 @@ function mainloop() {
         //console.log();
     }
 
+    //結果画面
+    if(bscene == 6) {
+        result();
+    }
 mouse_pointer();        //マウスポインター(視覚補助)
 
 }
@@ -732,6 +738,27 @@ function taisen_hense() {   //自陣編成表示(変数準備,移動)
             attack_teki(x,y,dx,dy,d,size,tmr);      //敵陣攻撃処理
             taisen_hense_hyoji(c,cx,cy,size,x,y);   //自陣表示処理
             teki_hense_hyoji(d,dx,dy,size,x,y);     //敵陣表示処理
+            if(y >9&&c >0) {
+                sougou_hp++
+                if(sougou_hp == 15) []
+            }
+            if(y>8 &&d == 0) {
+                sougou_hp_teki++
+            }
+            if(sougou_hp >= 120) {
+                kekka = 0;
+                bscene = 6;
+            }
+            if(sougou_hp_teki >= 120) {
+                kekka = 1;
+                bscene = 6;
+            }
+            if(sougou_hp_teki == 119) {
+                sougou_hp_teki =0;
+            }
+            if(sougou_hp == 119) {
+                sougou_hp =0;
+            }
         }
     }
 }
@@ -780,6 +807,13 @@ function taisen_hense() {   //自陣編成表示(変数準備,移動)
                     fText(sl_life[y][x],cx,cy-40,20,"blue");
                 }
             }
+            if(y<7) {
+                if(sl_life[y+1][x] <0) {
+                    c=0;
+                    sl_life[y][x] = 0;
+                }
+            }
+            if(sl_life[y][x] <= 0) hense[y][x] = 0;
 }
         function ido_syori_teki() { //敵陣移動処理
             if(iti_teki == 1) {
@@ -816,6 +850,13 @@ function taisen_hense() {   //自陣編成表示(変数準備,移動)
                 if(d >0 && d != 20) {
                     fText(sl_life_teki[y][x],dx,dy-40,20,"red");
                 }
+                if(y>7) {
+                    if(sl_life_teki[y][x] <0) {
+                        d=0;
+                        sl_life_teki[y][x] = 0;
+                    }
+                }
+                if(sl_life_teki[y][x] <= 0) d = 0;
             }
         }
         function attack(x,y,cx,cy,c,size,tmr) {             //自陣攻撃処理
@@ -959,7 +1000,8 @@ function timer_modki() {//時間制限
     //fText(60 - timehyouji,960,100,100,"white");//文字表示
     if(time >= 120) {
         sleep(300);
-        bscene = 3;
+        bscene = 6;
+        kekka = 0;
         setFPS(30);
     }
 }
@@ -999,9 +1041,22 @@ function setumei_kinou() {//説明機能
                 fText("クリックして倍速！",tapX+350,tapY,70,"black")
             }
         }
+
+
+
 function result() {//結果画面
-    
+    setAlp(4);
+    fill("#a6a6a6");
+    setAlp(100);
+    sRect(200,100,1520,880,"black");
+    fRect(200,100,1520,880,"#87cefa");
+    if(kekka == 1) {//win
+        
+    }
+    if(kekka == 0) {//lose
+    }
 }
+
 
 function mouse_pointer() {          //視覚補助
     if(sikaku_hojo == 1) {
@@ -1068,7 +1123,7 @@ function image_load() {     //画像ロード
     //大工┘
 
         //攻撃エフェクト
-    loadImg(102, "image/mahou_ef.png");
+    //loadImg(102, "image/mahou_ef.png");
 }
 function sound_load() {     //効果音ロード
         //対戦画面
