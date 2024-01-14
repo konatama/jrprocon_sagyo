@@ -1,0 +1,21 @@
+{
+ "short_name"       : "荷台",
+ "name"             : "荷台ビルダー",
+ "description"      : "新世代RPG",
+ "start_url"        : "https://konatama.github.io/jrprocon_sagyo/konatama-main12_29_4_40/",
+ "background_color" : "#000000",
+ "theme_color"      : "#0040c0",
+ "display"          : "fullscreen",
+ "icons": [
+    {
+     "src": "title_logo.png",
+     "sizes": "500x500",
+     "type": "image/png"
+    },
+    {
+     "src": "title_logo.png",
+     "sizes": "500x500",
+     "type": "image/png"
+    }
+ ]
+}
